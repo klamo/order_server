@@ -1,11 +1,16 @@
 server:
   port: 8781
-#Ö¸¶¨×¢²áÖĞĞÄµØÖ·
+#æŒ‡å®šæ³¨å†Œä¸­å¿ƒåœ°å€
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:8761/eureka/
-#·şÎñÆ÷µÄÃû³Æ
+#æœåŠ¡å™¨çš„åç§°
 spring:
   application:
     name: order-service
+#ribbonè‡ªå®šä¹‰è´Ÿè½½å‡è¡¡ç­–ç•¥
+product-service:
+  ribbon:
+    #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
