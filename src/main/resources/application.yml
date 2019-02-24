@@ -16,3 +16,11 @@ product-service:
     #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
     #随机策略
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
+
+#feign的超时时间设置
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 2000
