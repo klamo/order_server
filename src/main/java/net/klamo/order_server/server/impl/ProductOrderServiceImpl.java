@@ -1,6 +1,10 @@
 package net.klamo.order_server.server.impl;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fasterxml.jackson.databind.JsonNode;
 import net.klamo.order_server.domain.ProductOrder;
+import net.klamo.order_server.server.ProductClient;
 import net.klamo.order_server.server.ProductOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
@@ -22,6 +26,9 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Autowired
     private LoadBalancerClient loadBalancer;
+
+    @Autowired
+    private ProductClient productClient;
 
 
     @Override
@@ -46,4 +53,21 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
         return productOrder;
     }
+
+    @Override
+    public ProductOrder findById(int id) {
+        String response = productClient.findById(id);
+        JSONObject forObject = JSON.parseObject(response);
+
+        //打印日志
+        System.out.println(forObject);
+
+        ProductOrder productOrder = new ProductOrder();
+        productOrder.setCreateTime(new Date());
+        productOrder.setProductName(forObject.get("name").toString());
+        productOrder.setPrice(Integer.parseInt(forObject.get("price").toString()));
+        return productOrder;
+    }
+
+
 }

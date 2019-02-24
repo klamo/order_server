@@ -6,4 +6,6 @@ import net.klamo.order_server.domain.ProductOrder;
 public interface ProductOrderService {
 
     public ProductOrder save(int userId,int productId);
+
+    public ProductOrder findById(int id);
 }

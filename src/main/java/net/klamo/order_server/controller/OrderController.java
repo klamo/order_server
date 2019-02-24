@@ -20,4 +20,9 @@ public class OrderController {
         return  productOrderService.save(userId,productId);
     }
 
+    @RequestMapping("findById")
+    public Object findById(@RequestParam("id") int id){
+        return productOrderService.findById(id);
+    }
+
 }

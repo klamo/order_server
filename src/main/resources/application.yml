@@ -1,5 +1,5 @@
 server:
-  port: 8781
+  port: 8782
 #指定注册中心地址
 eureka:
   client:
@@ -12,5 +12,7 @@ spring:
 #ribbon自定义负载均衡策略
 product-service:
   ribbon:
+    #轮询策略
     #NFLoadBalancerRuleClassName: com.netflix.loadbalancer.WeightedResponseTimeRule
+    #随机策略
     NFLoadBalancerRuleClassName: com.netflix.loadbalancer.RandomRule
