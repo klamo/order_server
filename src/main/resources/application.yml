@@ -9,6 +9,11 @@ eureka:
 spring:
   application:
     name: order-service
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    timeout: 2000
 #ribbon自定义负载均衡策略
 product-service:
   ribbon:
@@ -22,5 +27,22 @@ feign:
   client:
     config:
       default:
-        connectTimeout: 5000
-        readTimeout: 2000
+        connectTimeout: 4000
+        readTimeout: 4000
+  hystrix:
+    enabled: true
+#hystrix超时时间设置为没有超时
+#hystrix:
+#  command:
+#    default:
+#      execution:
+#        timeout:
+#          enabled: false
+#hystrix超时时间设置为4秒
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
