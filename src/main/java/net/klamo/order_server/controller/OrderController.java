@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +33,11 @@ public class OrderController {
   @RequestMapping("findById")
   @HystrixCommand(fallbackMethod = "findByIdDefaultStores")
   public Object findById(@RequestParam("id") int id, HttpServletRequest httpServletRequest) {
+    String token = httpServletRequest.getHeader("token");
+    String cookie = httpServletRequest.getHeader("cookie");
+    String aaa = httpServletRequest.getHeader("aaa");
+    Enumeration<String> headerNames = httpServletRequest.getHeaderNames();
+    System.out.println("token=" + token + ",cookie=" + cookie+ ",aaa=" + aaa);
     HashMap<String, Object> data = Maps.newHashMap();
     data.put("code", -1);
     data.put("data", productOrderService.findById(id));
@@ -44,7 +50,7 @@ public class OrderController {
     new Thread(
             () -> {
               if (StringUtils.isBlank(findById)) {
-                System.out.println("服务器:"+remoteAddr+",出现故障，发送短信！");
+                System.out.println("服务器:" + remoteAddr + ",出现故障，发送短信！");
                 redisTemplate.opsForValue().set("findById", "findById", 10, TimeUnit.SECONDS);
               } else {
                 System.out.println("已发送短信，不再重复发送！");
